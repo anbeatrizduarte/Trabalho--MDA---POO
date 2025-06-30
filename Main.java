@@ -1,40 +1,44 @@
 import java.util.Scanner;
 
-public class Main {
+public class Main { // Ou App, ou o nome que você usa para sua classe principal
+
     public static void main(String[] args) {
-        CadastroRespostas cadastro = new CadastroRespostas();
-        Scanner sc = new Scanner(System.in);
-        int opcao = -1;
+        Scanner scanner = new Scanner(System.in);
+        CadastroRespostas cadastroRespostas = new CadastroRespostas();
 
-        while (opcao != 0) {
-            System.out.println("\n=== Menu Principal ===");
-            System.out.println("1. Criar Arquivo da Disciplina");
-            System.out.println("2. Gerar Resultado da Disciplina");
-            System.out.println("3. Visualizar Respostas dos Alunos");
+        int opcao;
+        do {
+            System.out.println("\n--- Menu Principal ---");
+            System.out.println("1. Criar Arquivo de Respostas da Disciplina");
+            System.out.println("2. Gerar Resultados da Disciplina");
             System.out.println("0. Sair");
-            System.out.print("Digite a opcao: ");
+            System.out.print("Escolha uma opção: ");
 
-            opcao = sc.nextInt();
-            sc.nextLine();
+            // Validação de entrada para a opção do menu
+            while (!scanner.hasNextInt()) {
+                System.out.println("Entrada inválida. Por favor, digite um número.");
+                scanner.next(); // Descarta a entrada inválida
+                System.out.print("Escolha uma opção: ");
+            }
+            opcao = scanner.nextInt();
+            scanner.nextLine(); // Consumir a quebra de linha após nextInt()
 
             switch (opcao) {
                 case 1:
-                    cadastro.criarArquivoDisciplina(sc);
+                    cadastroRespostas.criarArquivoDisciplina(scanner);
                     break;
                 case 2:
-                    cadastro.gerarResultado(sc);
-                    break;
-                case 3:
-                    System.out.print("Digite o nome da disciplina para visualizar (ex: Matematica.txt): ");
-                    String nomeArqVisualizar = sc.nextLine();
-                    cadastro.visualizarArquivo("RespostasAlunos/" + nomeArqVisualizar);
+                    cadastroRespostas.gerarResultado(scanner);
                     break;
                 case 0:
+                    System.out.println("Saindo do programa. Até mais!");
                     break;
                 default:
                     System.out.println("Opção inválida. Tente novamente.");
+                    break;
             }
-        }
-        sc.close();
+        } while (opcao != 0);
+
+        scanner.close(); // É importante fechar o Scanner ao final
     }
 }
